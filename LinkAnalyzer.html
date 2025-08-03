@@ -4,18 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title >LinkAnalyzer</title>
+    <style>
+        .bg{
+            background-color: aquamarine;
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .button{
+            background-color: rgb(25, 170, 139);
+            border-radius: 30;
+            width: 290px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            box-shadow: 0 1px 3px 1px rgba(0,0,0,0.3) ;
+            
+        }
+        
+    </style>
 </head>
-<body style="text-align: center;">
+<body  class="bg">
     <h1>LinkAnalyzer</h1>
-    <input  type="file" id="fileInput " accept-".csv"/></input>
+    <input class="button" type="file" id="fileInput" accept-".csv"/></input>
     <div id="output"></div>
     <script>
         //function for when a file is selected
-        document.getElementById('fileInput').onchange()
+        document.getElementById('fileInput').onchange=function()
         {
             //to fetch the file
             const file= this.files[0] //this for the this file(refers to the file inout element),first file is stored at the index[0]
-           if(!file) return; //return if no file
+            if(!file) return;  //return if no file
+            
             
            const reader = new FileReader();// make a reader for the file
 
@@ -24,10 +43,41 @@
 
            reader.onload = function()
            {
+        //to display whole content            
             const content=reader.result;  //event.target.result
             console.log(content); //to print 
-           };
 
+        //to display total count
+            const lines=content.split('\n'); //seperates lines
+            const countClicks= lines.length; //count
+            const msg="Total Clicks r  :~" + (countClicks); 
+            console.log(msg);
+
+        //count link Count
+            // const lines=content.split('\n'); //seperates lines
+            const countLink={};  //key value pair
+
+            for(i=1; i<lines.length;i++)
+            {
+                const row=lines[i].trim();//remove blanks n new lines
+                if (row==="") continue;//if blank line skip it
+                const columns=row.split(","); //split each row with help of comma so we get rows
+                const link=columns[1]; // made an obj named links nd stored 2nd index in it
+               
+                if(link in countLink)  //now it checks if the link already exists in our key value pair of countLink
+                  {
+                  countLink[link]+= 1;//then in the index where the link key is stored inc a value
+                  }
+                else   
+                  {
+                    countLink[link]= 1;
+                  }  
+            
+            
+            }
+
+        
+           };
            reader.readAsText(file);
         };
     </script>
