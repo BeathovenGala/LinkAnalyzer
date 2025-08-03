@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title >LinkAnalyzer</title>
+</head>
+<body style="text-align: center;">
+    <h1>LinkAnalyzer</h1>
+    <input  type="file" id="fileInput " accept-".csv"/></input>
+    <div id="output"></div>
+    <script>
+        //function for when a file is selected
+        document.getElementById('fileInput').onchange()
+        {
+            //to fetch the file
+            const file= this.files[0] //this for the this file(refers to the file inout element),first file is stored at the index[0]
+           if(!file) return; //return if no file
+            
+           const reader = new FileReader();// make a reader for the file
+
+           //the reader now
+           //file is read
+
+           reader.onload = function()
+           {
+            const content=reader.result;  //event.target.result
+            console.log(content); //to print 
+           };
+
+           reader.readAsText(file);
+        };
+    </script>
+</body>
+</html>
