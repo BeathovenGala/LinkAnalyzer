@@ -6,14 +6,18 @@
     <title >LinkAnalyzer</title>
     <style>
         .bg{
-            background-color: aquamarine;
+            background-color: #5EABD6;
             text-align: center;
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        }
+            /* display: flex;  Makes the body a flex container 
+            justify-content: center;  Centers content horizontally
+            align-items: center; Centers content vertically  */
+             
+        } 
 
         .button{
-            background-color: rgb(25, 170, 139);
-            border-radius: 30;
+            background-color:#FFB4B4;
+            border-radius: 10px;
             width: 290px;
             text-align: center;
             font-family: Arial, Helvetica, sans-serif;
@@ -21,12 +25,23 @@
             
         }
         
+        .card{
+        width: fit-content;
+        height: fit-content;
+        border-radius: 10px;
+        box-shadow: 0 5px 2px 0 rgba(0,0,0,0.3);
+        background-color: #FFB4B4;
+        float: left;
+        
+            }
     </style>
 </head>
 <body  class="bg">
     <h1>LinkAnalyzer</h1>
     <input class="button" type="file" id="fileInput" accept-".csv"/></input>
     <div id="output"></div>
+    <div id="outputTotal" class="card"></div>
+    <div id="outputLink" class="card"></div>
     <script>
         //function for when a file is selected
         document.getElementById('fileInput').onchange=function()
@@ -50,8 +65,10 @@
         //to display total count
             const lines=content.split('\n'); //seperates lines
             const countClicks= lines.length; //count
-            const msg="Total Clicks r  :~" + (countClicks); 
-            console.log(msg);
+            const msg1="Total Clicks r  :~" + (countClicks); 
+            console.log(msg1);//count in console
+            document.getElementById("outputTotal").innerHTML=`<div>${msg1}</div>`;
+            
 
         //count link Count
             // const lines=content.split('\n'); //seperates lines
@@ -75,8 +92,16 @@
             
             
             }
-
-        
+             console.log(countLink); //to display in console
+             //disp on page
+             let msg2="The links with count are<br>";
+             for(const pair of Object.entries(countLink)) //Object.entries converts object into array of key,value pair
+             {
+             const link= pair[0];
+             const count = pair[1];
+             msg2 += `${link}: ${count}<br>`;
+             }
+             document.getElementById("outputLink").innerHTML=`<div>${msg2}</div>`;
            };
            reader.readAsText(file);
         };
